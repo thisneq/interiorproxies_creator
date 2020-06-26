@@ -1,0 +1,24 @@
+{
+  "name": "interiorproxies_creator",
+  "version": "1.0.0",
+  "description": "Simple interior proxy generator.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NeQYT/interiorproxies_creator.git"
+  },
+  "author": "NeQ",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/NeQYT/interiorproxies_creator/issues"
+  },
+  "homepage": "https://github.com/NeQYT/interiorproxies_creator#readme",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "glob": "^7.1.6",
+    "path": "^0.12.7"
+  }
+}
