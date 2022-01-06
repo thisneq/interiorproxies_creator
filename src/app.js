@@ -48,6 +48,7 @@ function appendYTD() {
 			
             if (OldScriptName != ScriptName ) {
                 OldScriptName = ScriptName
+                console.log(ScriptName);
                 WaitToWrite = true
                 fs.appendFile('../output/interiorproxies.meta', (i == 0 ? "  ".repeat(2) : "  ".repeat(4)) + '<!-- ' + ScriptName + ' -->\n', function (err) {
                     WaitToWrite = false
@@ -64,7 +65,7 @@ function appendYTD() {
 
             WaitToWrite = true
             fs.appendFile('../output/interiorproxies.meta', (i == 0 ? "  ".repeat(2) : "  ".repeat(4)) + '<Item>' + name2 + '</Item>\n', function (err) {
-				WaitToWrite = false
+                WaitToWrite = false
                 if (err) {
                     console.log('An error occured.');
                 } else {
