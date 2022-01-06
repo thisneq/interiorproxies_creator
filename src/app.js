@@ -28,42 +28,41 @@ function createFile() {
 }
 
 function appendYTD() {
-	var OldScriptName = ""
-	var ScriptName = ""
+    var OldScriptName = ""
+    var ScriptName = ""
     glob("../input/**/**.ymap", async function (er, files) {
         for (i=0; i < files.length; i++) {
-			var filePathData = files[i].split(/[\\\/]/)
-			var WaitToWrite = false
-			var Found = false
-			for (var i2 = filePathData.length; i2 >= 1; i2--) {
-				if (filePathData[i2] == "stream" ) {
-					Found = true
-				} else if (Found) {
-					ScriptName = filePathData[i2]
-					break;
-				}
-			}
+            var filePathData = files[i].split(/[\\\/]/)
+            var WaitToWrite = false
+            var Found = false
+            for (var i2 = filePathData.length; i2 >= 1; i2--) {
+                if (filePathData[i2] == "stream" ) {
+                    Found = true
+                } else if (Found) {
+                   ScriptName = filePathData[i2]
+                    break;
+                }
+            }
             var name = path.basename(files[i])
             var name2 = name.replace('.ymap', "")
 			
-			if (OldScriptName != ScriptName ) {
-				OldScriptName = ScriptName
-				console.log(ScriptName);
-				WaitToWrite = true
-				fs.appendFile('../output/interiorproxies.meta', (i == 0 ? "  ".repeat(2) : "  ".repeat(4)) + '<!-- ' + ScriptName + ' -->\n', function (err) {
-					WaitToWrite = false
-					if (err) {
-						console.log('An error occured.');
-					} else {
-						return;
-					}
-				});
-				while (WaitToWrite) {
-				  await Delay(0)
-				}
-			}
+            if (OldScriptName != ScriptName ) {
+                OldScriptName = ScriptName
+                WaitToWrite = true
+                fs.appendFile('../output/interiorproxies.meta', (i == 0 ? "  ".repeat(2) : "  ".repeat(4)) + '<!-- ' + ScriptName + ' -->\n', function (err) {
+                    WaitToWrite = false
+                    if (err) {
+                        console.log('An error occured.');
+                    } else {
+                        return;
+                    }
+                });
+                while (WaitToWrite) {
+                    await Delay(0)
+                }
+            }
 
-			WaitToWrite = true
+            WaitToWrite = true
             fs.appendFile('../output/interiorproxies.meta', (i == 0 ? "  ".repeat(2) : "  ".repeat(4)) + '<Item>' + name2 + '</Item>\n', function (err) {
 				WaitToWrite = false
                 if (err) {
@@ -72,9 +71,9 @@ function appendYTD() {
                     return;
                 }
             });
-			while (WaitToWrite) {
-			  await Delay(0)
-			}
+            while (WaitToWrite) {
+                await Delay(0)
+            }
 
             if (i == files.length-1) {
                 setTimeout(() => {
