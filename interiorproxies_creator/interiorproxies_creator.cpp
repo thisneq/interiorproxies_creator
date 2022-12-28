@@ -16,9 +16,9 @@ int GetRandomNumber(int min, int max)
 	return uniform_dist(e1);
 }
 
-static vector<string> GetItemNames(string inputPath) 
+static vector<string> GetItemNames(string const &inputPath) 
 {
-	vector<string> ItemNames = {};
+	vector<string> itemNames = {};
 	for (const auto& entry : fs::recursive_directory_iterator(inputPath)) 
 	{
 		if (entry.path().extension() != ".ymap") continue;
@@ -35,14 +35,14 @@ static vector<string> GetItemNames(string inputPath)
 				path = path.substr(0, path.find_last_of("\\"));
 			}
 		}
-		string FileName = entry.path().filename().stem().generic_string();
-		ItemNames.push_back(resourceName + ":" + FileName);
+		string fileName = entry.path().filename().stem().generic_string();
+		itemNames.push_back(resourceName + ":" + fileName);
 	}
 
-	return ItemNames;
+	return itemNames;
 } 
 
-static void WriteItemsToFile(vector<string> &ItemNames)
+static void WriteItemsToFile(vector<string> const &itemNames)
 {
 	ifstream infile("./data/interiorproxies.meta");
 	ofstream outfile("./output/interiorproxies.meta");
@@ -61,17 +61,17 @@ static void WriteItemsToFile(vector<string> &ItemNames)
 
 		if (line.find("<proxies>") != string::npos) 
 		{
-			for (int i=0; i < ItemNames.size(); i++) 
+			for (int i=0; i < itemNames.size(); i++)
 			{
-				string resourceName = ItemNames[i].substr(0, ItemNames[i].find(":"));
-				string itemName = ItemNames[i].substr(ItemNames[i].find(":") + 1);
+				string resourceName = itemNames[i].substr(0, itemNames[i].find(":"));
+				string itemName = itemNames[i].substr(itemNames[i].find(":") + 1);
 				if (resourceName != currentResource) 
 				{
 					currentResource = resourceName;
 					outfile << (i > 0 ? "\n" : "") << "\t\t<!-- " << resourceName << " -->";
 				}
 				outfile << "\n" << "\t\t<Item>" << itemName << "</Item>";
-				cout << "Writing '" << ItemNames[i] << "' to file." << (i != ItemNames.size() ? "\n" : "");
+				cout << "Writing '" << itemNames[i] << "' to file." << (i != itemNames.size() ? "\n" : "");
 			}
 		}
 	}
@@ -92,10 +92,10 @@ int main()
 	}
 	cout << "Selected path: " << inputPath << endl;
 
-	vector<string> ItemNames = GetItemNames(inputPath);
-	WriteItemsToFile(ItemNames);
+	vector<string> itemNames = GetItemNames(inputPath);
+	WriteItemsToFile(itemNames);
 
-	cout << "\nInterior proxies has been successfully created. Total items: " << ItemNames.size() << endl;
+	cout << "\nInterior proxies has been successfully created. Total items: " << itemNames.size() << endl;
 	system("pause");
 
 	return 0;
