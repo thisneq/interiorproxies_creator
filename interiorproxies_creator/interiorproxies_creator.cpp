@@ -54,7 +54,7 @@ static void WriteItemsToFile(vector<string> const &itemNames)
 		if (line.find("<startFrom value=") != string::npos) 
 		{
 			int random = GetRandomNumber(2000, 3000);
-			cout << "Changing form number value to " << random << endl;
+			cout << "Changing startFrom number value to " << random << endl;
 			line = "\t<startFrom value=\"" + to_string(random) + "\" />";
 		}
 		outfile << line << "\n";
